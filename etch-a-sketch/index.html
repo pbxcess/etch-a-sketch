@@ -7,18 +7,35 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="etch-a-sketch">
+    <div class="container">
 
-        <h1>Etch a Sketch</h1>
+        <div class="options-panel">
+            <h2>Etch a Sketch Options</h2>
+            <div class="controls">
+                <label for="color-picker">Color:</label>
+                <input type="color" id="color-picker" name="color" value="#000000">
 
-        <div class="controls">
-            <button id="clear">Cear</button>
-            <button id="resize">Resize Grid</button>
+                <button id="eraser-btn">Eraser</button>
+
+                <label for="grid-size">Grid Size:</label>
+                <input type="range" name="grid-size" id="grid-size" min="5" max="50" value="16">
+
+                <!--Clr/Save/Dwnld btns-->
+                <button id="clear-btn">Clear</button>
+                <button id="save-btn">Save</button>
+                <button id="download-btn">Download</button>
+            </div>
         </div>
 
-        <div id="gridContainer" class="gridContainer"></div>
-    </div>
+        <div class="drawing-area">
+            <div id="grid"></div>
+        </div>
 
-    <script src="script.js"></script>
+        <div class="gallery">
+            <h2>Your Gallery!</h2>
+            <div id="gallery-container"></div>
+        </div>
+    </div>
+        <script src="script.js"></script> <!--LUKAS-->
 </body>
 </html>
