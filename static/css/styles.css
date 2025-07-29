@@ -1,0 +1,129 @@
+/* Base Styles */
+:root{
+  --main-color: #1e1668;
+  --secondary-color: #ffffff;
+  --third-color: #E0D9F6;
+  --fourth-color: #C252E1;
+  --fifth-color:#586AE2;
+}
+
+h1 {
+    text-align: center;
+    color: aliceblue;
+}
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--main-color);
+    color: #333;
+}
+
+/* Main container */
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Options Panel */
+.options-panel {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.options-panel h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.controls label {
+    margin-bottom: 5px;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Drawing Area */
+.drawing-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    grid-gap: 1px;
+    width: 320px;
+    height: 320px;
+}
+
+.drawing-area div {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 20px;
+    transition: background-color 0.3s;
+}
+
+/* Gallery Section */
+.gallery {
+    width: 100%;
+    text-align: center;
+}
+
+.gallery h2 {
+    margin-bottom: 20px;
+    color: var(--fourth-color);
+}
+
+#gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+#gallery-container img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+#gallery-container img:hover {
+    opacity: 0.7;
+}

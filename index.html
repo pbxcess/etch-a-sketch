@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Etch A Sketch</title>
+    <link rel="stylesheet" href="static/css/styles.css" />
+  </head>
+  <body>
+    <h1>Etch a Sketch</h1>
+    <div class="container">
+      <div class="options-panel">
+        <h2>Etch a Sketch Options</h2>
+        <div class="controls">
+          <label for="color-picker">Color:</label>
+          <input type="color" id="color-picker" name="color" value="#000000" />
+
+          <button id="eraser-btn">Eraser</button>
+
+          <label for="grid-size">Grid Size:</label>
+          <input
+            type="range"
+            name="grid-size"
+            id="grid-size"
+            min="5"
+            max="50"
+            value="16"
+          />
+
+          <!--Clr/Save/Dwnld btns-->
+          <button id="clear-btn">Clear</button>
+          <button id="save-btn">Save</button>
+          <button id="download-btn">Download</button>
+        </div>
+      </div>
+
+      <div class="drawing-area">
+        <div id="grid"></div>
+      </div>
+
+      <div class="gallery">
+        <h2>Your Gallery!</h2>
+        <div id="gallery-container"></div>
+      </div>
+    </div>
+    <script src="static/js/script.js"></script>
+    <!--LUKAS-->
+  </body>
+</html>
+
