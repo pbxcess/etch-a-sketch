@@ -4,10 +4,11 @@ const clearBtn = document.getElementById("clear-btn");
 const colorPicker = document.getElementById("color-picker");
 const drawingGrid = document.getElementById("drawing-grid");
 const eraserBtn = document.getElementById("eraser-btn");
+const gridSizeInput = document.getElementById("grid-size");
 
 let baseColor = "#f0f0f0";
 let drawingColor = colorPicker.value;
-let gridSize = 16;
+let gridSize = gridSizeInput.value;
 let isDrawing = false;
 let isErasing = false;
 
@@ -39,9 +40,8 @@ function clearGrid() {
   baseColor = "#f0f0f0";
   colorPicker.value = "#000000";
   drawingColor = colorPicker.value;
-  gridSize = 16;
   isErasing = false;
-  initGrid();
+  initGrid(gridSize);
 }
 
 function setupEventListeners() {
@@ -65,11 +65,16 @@ function setupEventListeners() {
     drawingColor = event.target.value;
     isErasing = false;
   });
+
+  gridSizeInput.addEventListener("input", (event) => {
+    gridSize = event.target.value;
+    initGrid(gridSize);
+  });
 }
 
-function initGrid() {
-  createGird(gridSize);
+function initGrid(size) {
+  createGird(size);
   setupEventListeners();
 }
 
-initGrid();
+initGrid(gridSize);
