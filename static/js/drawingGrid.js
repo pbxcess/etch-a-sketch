@@ -1,14 +1,14 @@
 /* variables */
 
-let baseColor = "#f0f0f0";
-let drawingColor = "black";
-let gridSize = 16;
-let isDrawing = false;
-let isErasing = false;
-
 const drawingGrid = document.getElementById("drawing-grid");
 const eraserBtn = document.getElementById("eraser-btn");
 const colorPicker = document.getElementById("color-picker");
+
+let baseColor = "#f0f0f0";
+let drawingColor = colorPicker.value;
+let gridSize = 16;
+let isDrawing = false;
+let isErasing = false;
 
 function createGird(size) {
   drawingGrid.innerHTML = "";
@@ -21,10 +21,12 @@ function createGird(size) {
     cell.classList.add("grid-cell");
 
     cell.addEventListener("mouseover", (event) => {
-      if (isDrawing && isErasing) {
-        event.target.classList.remove("drawn");
-      } else if (isDrawing) {
-        event.target.classList.add("drawn");
+      if (isDrawing) {
+        if (isErasing) {
+          event.target.style.backgroundColor = baseColor;
+        } else {
+          event.target.style.backgroundColor = drawingColor;
+        }
       }
     });
 
@@ -43,6 +45,11 @@ function setupEventListeners() {
 
   eraserBtn.addEventListener("click", () => {
     isErasing = true;
+  });
+
+  colorPicker.addEventListener("input", (event) => {
+    drawingColor = event.target.value;
+    isErasing = false;
   });
 }
 
