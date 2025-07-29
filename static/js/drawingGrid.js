@@ -1,8 +1,9 @@
 /* variables */
 
+const clearBtn = document.getElementById("clear-btn");
+const colorPicker = document.getElementById("color-picker");
 const drawingGrid = document.getElementById("drawing-grid");
 const eraserBtn = document.getElementById("eraser-btn");
-const colorPicker = document.getElementById("color-picker");
 
 let baseColor = "#f0f0f0";
 let drawingColor = colorPicker.value;
@@ -34,6 +35,15 @@ function createGird(size) {
   }
 }
 
+function clearGrid() {
+  baseColor = "#f0f0f0";
+  colorPicker.value = "#000000";
+  drawingColor = colorPicker.value;
+  gridSize = 16;
+  isErasing = false;
+  initGrid();
+}
+
 function setupEventListeners() {
   document.addEventListener("mousedown", () => {
     isDrawing = true;
@@ -45,6 +55,10 @@ function setupEventListeners() {
 
   eraserBtn.addEventListener("click", () => {
     isErasing = true;
+  });
+
+  clearBtn.addEventListener("click", () => {
+    clearGrid();
   });
 
   colorPicker.addEventListener("input", (event) => {
