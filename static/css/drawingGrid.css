@@ -1,10 +1,15 @@
 .grid-container {
+  grid-area: canvas;
   display: grid;
   grid-template-columns: repeat(24, 1fr);
   grid-template-rows: repeat(24, 1fr);
   width: 500px;
   height: 500px;
+  margin: 0 auto;
   box-sizing: border-box;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .grid-cell {
