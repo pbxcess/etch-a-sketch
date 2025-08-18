@@ -1,7 +1,7 @@
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(16, 1fr);
-  grid-template-rows: repeat(16, 1fr);
+  grid-template-columns: repeat(24, 1fr);
+  grid-template-rows: repeat(24, 1fr);
   width: 500px;
   height: 500px;
   box-sizing: border-box;
