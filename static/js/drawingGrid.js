@@ -8,14 +8,15 @@ const eraserBtn = document.getElementById("eraser-btn");
 const galleryContainer = document.getElementById("gallery-container");
 const gridSizeInput = document.getElementById("grid-size");
 const saveBtn = document.getElementById("save-btn");
+const penBtn = document.getElementById("pen-btn");
 
 let baseColor = "#f0f0f0";
 let drawingColor = colorPicker.value;
-let gridSize = gridSizeInput.value;
+let gridSize = parseInt(gridSizeInput.value, 10);
 let isDrawing = false;
 let isErasing = false;
 
-function createGird(size) {
+function createGrid(size) {
   drawingGrid.innerHTML = "";
 
   drawingGrid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
@@ -53,8 +54,14 @@ function clearGrid() {
   colorPicker.value = "#000000";
   drawingColor = colorPicker.value;
   isErasing = false;
-  createGird(gridSize);
+  createGrid(gridSize);
   displaySavedImages();
+}
+
+function setTool(mode) {
+  isErasing = mode === "eraser";
+  penBtn.classList.toggle("active", !isErasing);
+  eraserBtn.classList.toggle("active", isErasing);
 }
 
 function setupEventListeners() {
@@ -62,22 +69,19 @@ function setupEventListeners() {
     isDrawing = false;
   });
 
-  eraserBtn.addEventListener("click", () => {
-    isErasing = true;
-  });
+  penBtn.addEventListener("click", () => setTool("pen"));
+  eraserBtn.addEventListener("click", () => setTool("eraser"));
 
-  clearBtn.addEventListener("click", () => {
-    clearGrid();
-  });
+  clearBtn.addEventListener("click", clearGrid);
 
   colorPicker.addEventListener("input", (event) => {
     drawingColor = event.target.value;
-    isErasing = false;
+    setTool("pen");
   });
 
   gridSizeInput.addEventListener("input", (event) => {
     gridSize = event.target.value;
-    createGird(gridSize);
+    createGrid(gridSize);
   });
 
   downloadBtn.addEventListener("click", () => {
@@ -179,6 +183,7 @@ function saveImage() {
 }
 
 // Init
-createGird(gridSize);
+createGrid(gridSize);
 setupEventListeners();
 displaySavedImages();
+setTool("pen");
