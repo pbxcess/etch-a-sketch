@@ -148,6 +148,11 @@ button:hover { background-color: var(--fourth-color); }
   width: min(100%, calc(100vh - var(--header-h) - (2 * var(--page-pad))));
 }
 
+.grid-container, .grid-container * {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 /* Media Responsive CSS */
 @media (max-width: 900px) {
   .container {
