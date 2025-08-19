@@ -1,5 +1,5 @@
 # Etch a Sketch
-
+[![Watch the Video!](https://i9.ytimg.com/vi/dIkxsVDmdOY/mqdefault.jpg?sqp=CJDkj8UG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGCMgGih_MA8=&rs=AOn4CLDAEyvtz0Tv4FbEauWY6qJB_Uu6yw)](https://www.youtube.com/watch?v=dIkxsVDmdOY)
 ---
 
 ## Project Concept and Purpose
