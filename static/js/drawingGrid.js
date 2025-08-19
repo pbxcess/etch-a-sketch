@@ -17,7 +17,6 @@ let gridSize = GRID_DIM;
 
 let baseColor = "#f0f0f0";
 let drawingColor = colorPicker.value;
-let brushSize = parseInt(gridSizeInput.value, 10);
 let brushSize = Math.min(
   BRUSH_MAX,
   Math.max(BRUSH_MIN, parseInt(gridSizeInput.value, 10) || BRUSH_MIN)
@@ -84,6 +83,7 @@ function createGrid(size) {
     cell.style.backgroundColor = getColor(r, c);
 
     cell.addEventListener("mousedown", (event) => {
+      event.preventDefault();
       isDrawing = true;
       const [row, col] = indexToRC(+event.target.dataset.index, gridSize);
       const color = isErasing ? baseColor : drawingColor;
