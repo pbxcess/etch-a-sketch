@@ -9,6 +9,8 @@ const galleryContainer = document.getElementById("gallery-container");
 const gridSizeInput = document.getElementById("grid-size");
 const saveBtn = document.getElementById("save-btn");
 const penBtn = document.getElementById("pen-btn");
+const BRUSH_MIN = parseInt(gridSizeInput.min || "1", 10);
+const BRUSH_MAX = parseInt(gridSizeInput.max || "6", 10);
 
 const GRID_DIM = 24;
 let gridSize = GRID_DIM;
@@ -16,6 +18,11 @@ let gridSize = GRID_DIM;
 let baseColor = "#f0f0f0";
 let drawingColor = colorPicker.value;
 let brushSize = parseInt(gridSizeInput.value, 10);
+let brushSize = Math.min(
+  BRUSH_MAX,
+  Math.max(BRUSH_MIN, parseInt(gridSizeInput.value, 10) || BRUSH_MIN)
+);
+
 let isDrawing = false;
 let isErasing = false;
 
@@ -126,9 +133,11 @@ function setupEventListeners() {
 
   gridSizeInput.addEventListener("input", (event) => {
     const raw = parseInt(event.target.value, 10);
-    const min = parseInt(event.target.min, 10);
-    const max = parseInt(event.target.max, 10);// small at the top, big at the bottom (slider is rotated)
-    brushSize = Math.max(1, max - (raw - min));
+    const min = BRUSH_MIN;
+    const max = BRUSH_MAX;
+    
+  // slider is rotated 180°, so invert: small at top, big at bottom
+    brushSize = Math.min(max, Math.max(min, max - (raw - min)));
   });
 
   downloadBtn.addEventListener("click", downloadImage);
