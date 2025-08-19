@@ -6,7 +6,8 @@
   --fourth-color: #c252e1;
   --fifth-color: #586ae2;
   --header-h: 64px;
-  --page-pad:12px;
+  --page-pad: 12px;
+  --main-font: url(fonts/Platinum Sign.ttf);
 }
 
 /* Gen reset */
@@ -14,7 +15,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--main-font);
   background-color: var(--main-color);
   color: #333;
   overflow-x: hidden;
@@ -27,11 +28,12 @@ h1 {
   text-align: center;
   color: aliceblue;
   margin: 0;
+  font-family: var(--main-font);
 }
 
 /* Body styling */
 body {
-  font-family: Arial, sans-serif;
+  font-family: var(--main-font);
   background-color: var(--main-color);
   color: #333;
   overflow-x: hidden;

@@ -10,9 +10,12 @@ const gridSizeInput = document.getElementById("grid-size");
 const saveBtn = document.getElementById("save-btn");
 const penBtn = document.getElementById("pen-btn");
 
+const GRID_DIM = 24;
+let gridSize = GRID_DIM;
+
 let baseColor = "#f0f0f0";
 let drawingColor = colorPicker.value;
-let gridSize = parseInt(gridSizeInput.value, 10);
+let brushSize = parseInt(gridSizeInput.value, 10);
 let isDrawing = false;
 let isErasing = false;
 
@@ -32,12 +35,31 @@ function rcToIndex(r, c, size) {
   return r * size + c;
 }
 
-function applyColor(r, c, color) {
-  gridColors[r][c] = color;
-}
-
 function getColor(r, c) {
   return gridColors?.[r]?.[c] ?? baseColor;
+}
+
+function paintAt(row, col, color) {
+  // brushSize is the SIDE LENGTH (1 => 1x1, 3 => 3x3, 5 => 5x5, ...)
+  const size = Math.max(1, brushSize);
+  const half = Math.floor((size - 1) / 2);
+  const top = row - half;
+  const left = col - half;
+
+  for (let r = 0; r < size; r++) {
+    const rr = top + r;
+    if (rr < 0 || rr >= gridSize) continue;
+
+    for (let c = 0; c < size; c++) {
+      const cc = left + c;
+      if (cc < 0 || cc >= gridSize) continue;
+
+      gridColors[rr][cc] = color;
+      const idx = rcToIndex(rr, cc, gridSize);
+      const cell = drawingGrid.children[idx];
+      if (cell) cell.style.backgroundColor = color;
+    }
+  }
 }
 
 function createGrid(size) {
@@ -58,16 +80,14 @@ function createGrid(size) {
       isDrawing = true;
       const [row, col] = indexToRC(+event.target.dataset.index, gridSize);
       const color = isErasing ? baseColor : drawingColor;
-      event.target.style.backgroundColor = color;
-      applyColor(row, col, color);
+      paintAt(row, col, color);
     });
 
     cell.addEventListener("mouseover", (event) => {
       if (!isDrawing) return;
       const [row, col] = indexToRC(+event.target.dataset.index, gridSize);
       const color = isErasing ? baseColor : drawingColor;
-      event.target.style.backgroundColor = color;
-      applyColor(row, col, color);
+      paintAt(row, col, color);
     });
 
     drawingGrid.appendChild(cell);
@@ -90,23 +110,6 @@ function setTool(mode) {
   eraserBtn.classList.toggle("active", isErasing);
 }
 
-function resizeGridPreservingDrawing(newSize) {
-  const oldSize = gridSize;
-  if (newSize === oldSize) return;
-
-  const newColors = initColorMatrix(newSize, baseColor);
-  for (let r = 0; r < newSize; r++) {
-    for (let c = 0; c < newSize; c++) {
-      const or = Math.floor((r * oldSize) / newSize);
-      const oc = Math.floor((c* oldSize) / newSize);
-      newColors[r][c] = getColor(or, oc);
-    }
-  }
-
-  gridColors = newColors;
-  gridSize = newSize;
-  createGrid(gridSize);
-}
 
 function setupEventListeners() {
   document.addEventListener("mouseup", () => (isDrawing = false));
@@ -124,9 +127,8 @@ function setupEventListeners() {
   gridSizeInput.addEventListener("input", (event) => {
     const raw = parseInt(event.target.value, 10);
     const min = parseInt(event.target.min, 10);
-    const max = parseInt(event.target.max, 10);
-    const corrected = max - (raw - min); // so that small grid is top of the slider and big grid is bottom of the slider
-    resizeGridPreservingDrawing(corrected);
+    const max = parseInt(event.target.max, 10);// small at the top, big at the bottom (slider is rotated)
+    brushSize = Math.max(1, max - (raw - min));
   });
 
   downloadBtn.addEventListener("click", downloadImage);
@@ -134,9 +136,7 @@ function setupEventListeners() {
 }
 
 function deleteImage(indexToRemove) {
-  const saved = normalizeSavedImages(
-    JSON.parse(localStorage.getItem(IMAGE_KEY)) || []
-  );
+  const saved = normalizeSavedImages(JSON.parse(localStorage.getItem(IMAGE_KEY)) || []);
   if (indexToRemove >= 0 && indexToRemove < saved.length) {
     saved.splice(indexToRemove, 1);
     localStorage.setItem(IMAGE_KEY, JSON.stringify(saved));
@@ -158,7 +158,7 @@ function downloadImage() {
 function downloadSavedImage(dataURL, name = "saved-image") {
   const link = document.createElement("a");
   link.href = dataURL;
-  link.download = `&{name}.png`;
+  link.download = `${name}.png`;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
