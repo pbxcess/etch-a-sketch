@@ -120,10 +120,20 @@ function setTool(mode) {
 
 function setupEventListeners() {
   document.addEventListener("mouseup", () => (isDrawing = false));
+  drawingGrid.addEventListener("mouseleave", () => (isDrawing = false));
 
   penBtn.addEventListener("click", () => setTool("pen"));
   eraserBtn.addEventListener("click", () => setTool("eraser"));
 
+  drawingGrid.addEventListener("mousemove", (event) => {
+    if (!isDrawing) return;
+    const target = event.target.closest(".grid-cell");
+    if (!target) return;
+    const [row, col] = indexToRC(+target.dataset.index, gridSize);
+    const color = isErasing ? baseColor : drawingColor;
+    paintAt(row, col, color);
+  });
+  
   clearBtn.addEventListener("click", clearGrid);
 
   colorPicker.addEventListener("input", (event) => {
